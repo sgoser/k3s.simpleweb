@@ -7,9 +7,10 @@ metadata:
 data:
   index.html: |
     <!DOCTYPE html><html><body>
-    <h3>Simple Web</h3>
+    <h1>Simple Web</h1>
     <h3>Owner: <a href="https://github.com/sgoser">Sergey Harbach</a></h3>
-    <h1>__hostname__</h1>
+    <h3>Hostname:</h3>
+    <h3>__hostname__</h3>
     </body></html>
 
 ---
@@ -52,8 +53,6 @@ spec:
         volumeMounts: # mount only editable volume with contained data which initContainer copied
           - mountPath: /usr/share/nginx/html/
             name: index
-          - mountPath: /root/.ssh/
-            name: ssh-keys
       initContainers: # initContainer to copy configMap to editable volume
       - name: copy
         image: sgoser/nginx-webserver:v0.5
@@ -75,10 +74,6 @@ spec:
       - name: config # name of volume to mount configMap
         configMap:
           name: index-config # name of configMap
-      - name: ssh-keys
-        secret:
-          secretName: ssh-keys
-          defaultMode: 0400
 
 ---
 apiVersion: v1
